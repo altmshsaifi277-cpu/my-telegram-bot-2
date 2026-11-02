@@ -6,6 +6,8 @@ logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 TOKEN = "9064894809:AAFHZI6dPcum2ZoCst8__ZGV8KHWobYQ7vE"
 UPI_ID = "altamas001@fam"
+# Tera QR code ka direct image link
+QR_IMAGE_URL = "https://i.ibb.co/6yq4W5g/1000038297.jpg"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
@@ -37,26 +39,5 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(text)
 
 async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer()
-    
-    payment_text = (
-        f"💳 **Payment Details:**\n\n"
-        f"1. Is UPI ID par payment karein:\n`{UPI_ID}`\n\n"
-        f"2. Payment karne ke baad screenshot yahin chat me bhejein taaki aapko turant access mil sake!"
-    )
-    
-    await query.message.reply_text(payment_text, parse_mode="Markdown")
 
-def main():
-    app = ApplicationBuilder().token(TOKEN).build()
-    
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CallbackQueryHandler(button_click))
-
-    print("Bot is running with UPI payment support...")
-    app.run_polling()
-
-if __name__ == "__main__":
-    main()
     
