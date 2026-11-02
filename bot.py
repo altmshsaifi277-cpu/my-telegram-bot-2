@@ -2,10 +2,10 @@ import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ApplicationBuilder, CallbackQueryHandler, CommandHandler, ContextTypes
 
-# Enable logging to catch any errors
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
 TOKEN = "9064894809:AAFHZI6dPcum2ZoCst8__ZGV8KHWobYQ7vE"
+UPI_ID = "altamas001@fam"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
@@ -22,14 +22,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     keyboard = [
-        [InlineKeyboardButton("⚡ ANIMAL FUN ⚡ ₹49/30 DAYS", callback_data="plan_1")],
-        [InlineKeyboardButton("🥵 CHILD CARN PACK ⚡ ₹59/30 DAYS", callback_data="plan_2")],
-        [InlineKeyboardButton("🥵 CHILD CORN 💧 ₹119/50 DAYS", callback_data="plan_3")],
-        [InlineKeyboardButton("🥵 REAL INDIAN DESI POM 💯 ₹79/30 DAYS", callback_data="plan_4")],
-        [InlineKeyboardButton("🥵 R@PE FULL VIDEO 🔥 ₹99/30 DAYS", callback_data="plan_5")],
-        [InlineKeyboardButton("🥵 BAAP BETI ⚡ ₹59/30 DAYS", callback_data="plan_6")],
-        [InlineKeyboardButton("🥵 ALL GROUP VIDEOS ❤️ ₹149/LIFETIME", callback_data="plan_7")],
-        [InlineKeyboardButton("🔥 ALL GROUP FULL ACCESS 💯 ₹179/LIFETIME", callback_data="plan_8")]
+        [InlineKeyboardButton("⚡ ANIMAL FUN ⚡ ₹49/30 DAYS", callback_data="plan_49")],
+        [InlineKeyboardButton("🥵 CHILD CARN PACK ⚡ ₹59/30 DAYS", callback_data="plan_59")],
+        [InlineKeyboardButton("🥵 CHILD CORN 💧 ₹119/50 DAYS", callback_data="plan_119")],
+        [InlineKeyboardButton("🥵 REAL INDIAN DESI POM 💯 ₹79/30 DAYS", callback_data="plan_79")],
+        [InlineKeyboardButton("🥵 R@PE FULL VIDEO 🔥 ₹99/30 DAYS", callback_data="plan_99")],
+        [InlineKeyboardButton("🥵 BAAP BETI ⚡ ₹59/30 DAYS", callback_data="plan_59_bb")],
+        [InlineKeyboardButton("🥵 ALL GROUP VIDEOS ❤️ ₹149/LIFETIME", callback_data="plan_149")],
+        [InlineKeyboardButton("🔥 ALL GROUP FULL ACCESS 💯 ₹179/LIFETIME", callback_data="plan_179")]
     ]
     
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -39,23 +39,24 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
-    await query.edit_message_text(text=f"Aapne select kiya: {query.data}. Payment karne ke liye yahan UPI ID par pay karein: yourname@paytm")
-
-async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
-    logging.error(msg="Exception while handling an update:", exc_info=context.error)
+    
+    payment_text = (
+        f"💳 **Payment Details:**\n\n"
+        f"1. Is UPI ID par payment karein:\n`{UPI_ID}`\n\n"
+        f"2. Payment karne ke baad screenshot yahin chat me bhejein taaki aapko turant access mil sake!"
+    )
+    
+    await query.message.reply_text(payment_text, parse_mode="Markdown")
 
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
     
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_click))
-    
-    # Register error handler to catch future issues cleanly
-    app.add_error_handler(error_handler)
 
-    print("Bot is running...")
+    print("Bot is running with UPI payment support...")
     app.run_polling()
 
 if __name__ == "__main__":
     main()
-  
+    
