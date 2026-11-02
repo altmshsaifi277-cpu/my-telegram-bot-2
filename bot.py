@@ -5,7 +5,8 @@ from telegram.ext import ApplicationBuilder, CallbackQueryHandler, CommandHandle
 # Enable logging
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
-TOKEN = "9064894809:AAFHZI6dPcum2ZoCst8__ZGV8KHWobYQ7vE"
+# Naya wala secure token yahan set hai
+TOKEN = "9064894809:AAF04f6nE4D5pbTpyGZa4HlbMci8QPG9n60"
 UPI_ID = "altamas001@fam"
 PAYEE_NAME = "Mohd Altamas"
 
@@ -41,7 +42,7 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     
-    # Callback data se amount nikal lo (jaise "pay_49" se "49")
+    # Callback data se amount nikal lo
     data_parts = query.data.split("_")
     if len(data_parts) > 1:
         amount = data_parts[1]
@@ -74,7 +75,7 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_click))
 
-    print("Tagda bot is running successfully...")
+    print("Tagda bot is running successfully with new token...")
     app.run_polling()
 
 if __name__ == "__main__":
