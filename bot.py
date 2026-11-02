@@ -5,7 +5,7 @@ from telegram.ext import ApplicationBuilder, CallbackQueryHandler, CommandHandle
 # Enable logging
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
-# Naya wala secure token yahan set hai
+# Naya secure token
 TOKEN = "9064894809:AAF04f6nE4D5pbTpyGZa4HlbMci8QPG9n60"
 UPI_ID = "altamas001@fam"
 PAYEE_NAME = "Mohd Altamas"
@@ -42,7 +42,6 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     
-    # Callback data se amount nikal lo
     data_parts = query.data.split("_")
     if len(data_parts) > 1:
         amount = data_parts[1]
@@ -61,23 +60,10 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"2. Payment successful hone ke baad **screenshot** yahin chat me bhejein taaki instant access mil sake!"
     )
     
-    # Send QR Photo with fixed payment details
     await context.bot.send_photo(
         chat_id=query.from_user.id,
         photo=QR_IMAGE_URL,
         caption=payment_caption,
         parse_mode="Markdown"
-    )
 
-def main():
-    app = ApplicationBuilder().token(TOKEN).build()
-    
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CallbackQueryHandler(button_click))
-
-    print("Tagda bot is running successfully with new token...")
-    app.run_polling()
-
-if __name__ == "__main__":
-    main()
     
